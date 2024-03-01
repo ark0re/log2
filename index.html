@@ -3,6 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge,chrome=1">
 	<title>Arkore's Stream Tools</title>
 	<style>
 		html { font-size: 0; }
@@ -216,57 +217,55 @@
 	</style>
 </head>
 <body id="app">
-<div id="extra">
-	<div class="wrapper" style="height:100vh">
-		<nav class="toolbar">
-			<select id="dropdown" tabindex="1">
-						</select>
-			<button tabindex="2" type="button" class="backward" onclick="backward()"><i>⇠</i> <span>x2</span></button>
-			<button tabindex="3" type="button" class="forward" onclick="forward()"><i>⇢</i> <span>x2</span></button>
-		</nav>
+	<div id="extra">
+		<div class="wrapper" style="height:100vh">
+			<nav class="toolbar">
+				<select id="dropdown" tabindex="1">
+				</select>
+				<button tabindex="2" type="button" class="backward" onclick="backward()"><i>⇠</i></button>
+				<button tabindex="3" type="button" class="forward" onclick="forward()"><i>⇢</i></button>
+			</nav>
+		</div>
 	</div>
-</div>
 </body>
 <script>
-var projects = [];
+	var projects = [];
 
-document.addEventListener('DOMContentLoaded', function() {
-	document.querySelectorAll('article').forEach(function(el) {
-		projects.push({
-			type: el.dataset.type,
-			title: el.dataset.title,
-			ver: el.dataset.ver,
-			arch: el.dataset.arch,
-			files: el.dataset.files,
-			anchor: el.dataset.anchor,
-			el: el
+	document.addEventListener('DOMContentLoaded', function() {
+		document.querySelectorAll('article').forEach(function(el) {
+			projects.push({
+				type: el.dataset.type,
+				title: el.dataset.title,
+				ver: el.dataset.ver,
+				arch: el.dataset.arch,
+				anchor: el.dataset.anchor,
+				el: el
+			});
 		});
+		dropdown.onchange = function(e) {
+			var el = document.activeElement;
+			location.href = '#'+projects[this.selectedIndex]['anchor'];
+			el.focus();
+		};
 	});
-	dropdown.onchange = function(e) {
-		var el = document.activeElement;
-		location.href = '#'+projects[this.selectedIndex]['anchor'];
-		el.focus();
-	};
-});
 
-
-function backward() {
-	var i = dropdown.selectedIndex;
-	var i2 = i - 1;
-	if (i2 < 0) {
-		i2 = 0
+	function backward() {
+		var i = dropdown.selectedIndex;
+		var i2 = i - 1;
+		if (i2 < 0) {
+			i2 = 0
+		}
+		dropdown.selectedIndex = i2;
+		dropdown.dispatchEvent(new Event('change'));
 	}
-	dropdown.selectedIndex = i2;
-	dropdown.dispatchEvent(new Event('change'));
-}
-function forward() {
-	var i = dropdown.selectedIndex;
-	var i2 = i + 1;
-	if (i2 >= projects.length) {
-		i2 = projects.length - 1;
+	function forward() {
+		var i = dropdown.selectedIndex;
+		var i2 = i + 1;
+		if (i2 >= projects.length) {
+			i2 = projects.length - 1;
+		}
+		dropdown.selectedIndex = i2;
+		dropdown.dispatchEvent(new Event('change'));
 	}
-	dropdown.selectedIndex = i2;
-	dropdown.dispatchEvent(new Event('change'));
-}
 </script>
 </html>
