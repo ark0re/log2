@@ -353,10 +353,10 @@
 		<div class="wrapper" style="height:100vh">
 			<nav class="toolbar">
 				<select id="dropdown" tabindex="1">
-					<option value="0">minplay.Exe</option>
-					<option value="1">niplay.Exe</option>
-					<option value="2">Loop Play.Exe</option>
-					<option value="3">Virtual Piano.Exe</option>
+					<option value="minplay">minplay.Exe</option>
+					<option value="niplay">niplay.Exe</option>
+					<option value="LoopPlay">Loop Play.Exe</option>
+					<option value="VirtualPiano">Virtual Piano.Exe</option>
 				</select>
 				<button tabindex="2" type="button" class="backward" onclick="backward()"><i>⇠</i></button>
 				<button tabindex="3" type="button" class="forward" onclick="forward()"><i>⇢</i></button>
@@ -380,9 +380,12 @@
 		});
 		dropdown.onchange = function(e) {
 			var el = document.activeElement;
-			location.href = '#'+projects[this.selectedIndex]['anchor'];
+			location.href = '#'+this.options[this.selectedIndex].value;
 			el.focus();
 		};
+		if (location.hash != '') {
+			dropdown.value = location.hash.replace('#', '');
+		}
 	});
 
 	function backward() {
